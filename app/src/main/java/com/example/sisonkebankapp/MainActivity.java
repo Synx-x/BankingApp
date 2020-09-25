@@ -16,6 +16,11 @@ public class MainActivity extends AppCompatActivity {
     private Button uiLogin;
     private TextView uiRegister;
     boolean isValid = false;
+    String fEmail;
+    String fPwd;
+    database sql;
+
+    credentials credentials = new credentials("admin", "12345");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +33,18 @@ public class MainActivity extends AppCompatActivity {
         uiLogin = findViewById(R.id.login);
         uiRegister = findViewById(R.id.register);
 
+        //sql object
+        sql=new database(MainActivity.this);
+
+       fEmail = sql.getUserEmail();
+       fPwd = sql.getUserPwd();
+
+
         //button redirects to the registration activity if user doesn't have account
         uiRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MainPageActivity.class));
+                startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
             }
         });
 
@@ -52,7 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
                     isValid = validateLogin(inputEmail, inputPassword);
                     if(!isValid){
-                        Toast.makeText(MainActivity.this, "Incorrect Login Details", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(MainActivity.this, "Incorrect Login Details", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(MainActivity.this, fEmail+"1", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(MainActivity.this, fPwd+"2", Toast.LENGTH_SHORT).show();
+
                     }else{
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
@@ -69,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
     }
     //validate credentials on database and checks if you have credentials
     private boolean validateLogin(String email, String password){
-        if(RegistrationActivity.credentials != null){
-            if(email.equalsIgnoreCase(RegistrationActivity.credentials.getDbEmail()) && password.equals(RegistrationActivity.credentials.getDbPassword())){
+
+            if(email.equalsIgnoreCase(fEmail) && password.equals(fPwd)){
                 return true;
             }
-        }
+
         return false;
     }
 

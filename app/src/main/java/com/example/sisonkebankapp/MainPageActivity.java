@@ -25,7 +25,7 @@ public class MainPageActivity extends AppCompatActivity {
         reg = new RegistrationActivity();
         String txt = sql.get();
         uiUsername.setText(txt);
-        Toast.makeText(MainPageActivity.this, reg+"", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainPageActivity.this, txt+"", Toast.LENGTH_LONG).show();
 
 
 

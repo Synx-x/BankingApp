@@ -24,6 +24,8 @@ public class database {
     String email="email";
     String password="password";
     String mobile="mobile";
+    public String gEmail;
+    public String gPassword;
     helper h;
     Context c;
 
@@ -37,6 +39,14 @@ public class database {
 
     public database(MainPageActivity mainPageActivity) {
         c= mainPageActivity;
+    }
+
+    public database() {
+
+    }
+
+    public database(MainActivity mainActivity) {
+        c= mainActivity;
     }
 
     public void addUser(String regFname, String regLname, String regEmail, String regPassword, String regMobile) {
@@ -76,6 +86,48 @@ public class database {
         }
 
         return txt;
+    }
+
+    public String getUserEmail(){
+        h = new helper(c);
+        s = h.getReadableDatabase();
+        String txt1 ="";
+        String txt2 ="";
+        String[] col ={email, password};
+        //fetches all data
+        Cursor c = s.query(table, col, null, null, null, null, null);
+        c.moveToFirst();
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+
+            txt1 = txt1+c.getString(0);
+            txt2 = txt2+c.getString(1);
+
+            gEmail = txt1;
+            gPassword = txt2;
+        }
+
+        return txt1;
+    }
+
+    public String getUserPwd(){
+        h = new helper(c);
+        s = h.getReadableDatabase();
+        String txt1 ="";
+        String txt2 ="";
+        String[] col ={email, password};
+        //fetches all data
+        Cursor c = s.query(table, col, null, null, null, null, null);
+        c.moveToFirst();
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+
+            txt1 = txt1+c.getString(0);
+            txt2 = txt2+c.getString(1);
+
+            gEmail = txt1;
+            gPassword = txt2;
+        }
+
+        return txt2;
     }
 
     public class helper extends SQLiteOpenHelper{

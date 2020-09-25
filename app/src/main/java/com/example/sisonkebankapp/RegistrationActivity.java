@@ -79,6 +79,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     sql.close();
                     //loads new credentials into constructor
                     credentials = new credentials(regEmail, regPassword);
+                    credentials.setDbEmail(sql.get());
+                    credentials.setDbPassword(sql.get());
                     //once credentials have been registered, this will redirect the user to the login page
                     startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                     //message saying registration was successful
@@ -91,7 +93,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     //validates credentials against the required information in order to register an account
     private boolean validate(String name, String lname, String email, String password, String mobile){
-        if(name.isEmpty() || lname.isEmpty() || email.isEmpty() || password.length() < 5 || mobile.length() < 10 ){
+        if(name.isEmpty() || lname.isEmpty() || email.isEmpty() || password.length() < 5 || mobile.length() == 10 ){
             Toast.makeText(this, "Enter your details correctly/n Password must be at least 8 characters /n Mobile Number must be 10 digits", Toast.LENGTH_LONG).show();
             return false;
         }
