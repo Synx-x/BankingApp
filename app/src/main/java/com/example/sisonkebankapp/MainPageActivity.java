@@ -23,7 +23,7 @@ public class MainPageActivity extends AppCompatActivity {
         uiUsername = findViewById(R.id.username);
         RegistrationActivity reg;
         reg = new RegistrationActivity();
-        String txt = sql.get();
+        String txt = sql.getUserName();
         uiUsername.setText(txt);
         Toast.makeText(MainPageActivity.this, txt+"", Toast.LENGTH_LONG).show();
 

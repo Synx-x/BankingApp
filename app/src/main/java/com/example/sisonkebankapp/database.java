@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.Scanner;
+
 public class database {
 
     //database name
@@ -26,6 +28,7 @@ public class database {
     String mobile="mobile";
     public String gEmail;
     public String gPassword;
+    public String namePlate;
     helper h;
     Context c;
 
@@ -72,7 +75,7 @@ public class database {
         s.close();
     }
 
-    public String get(){
+    public String getUserName(){
         h = new helper(c);
         s = h.getReadableDatabase();
         String txt ="";
@@ -82,10 +85,13 @@ public class database {
         c.moveToFirst();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
 
-            txt = txt+c.getString(0)+" "+c.getString(1)+"\n";
+            txt = txt+c.getString(0)+" ";
+
+            Scanner fromStr = new Scanner(txt);
+            namePlate = fromStr.next();
         }
 
-        return txt;
+        return namePlate;
     }
 
     public String getUserEmail(){
@@ -99,14 +105,16 @@ public class database {
         c.moveToFirst();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
 
-            txt1 = txt1+c.getString(0);
-            txt2 = txt2+c.getString(1);
+            txt1 = txt1+c.getString(0)+" ";
 
-            gEmail = txt1;
-            gPassword = txt2;
+
+            Scanner fromStr = new Scanner(txt1);
+
+            gEmail = fromStr.next();
+
         }
 
-        return txt1;
+        return gEmail;
     }
 
     public String getUserPwd(){
@@ -120,14 +128,16 @@ public class database {
         c.moveToFirst();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
 
-            txt1 = txt1+c.getString(0);
-            txt2 = txt2+c.getString(1);
 
-            gEmail = txt1;
-            gPassword = txt2;
+            txt2 = txt2+c.getString(1)+" ";
+
+            Scanner fromStr = new Scanner(txt2);
+
+
+            gPassword = fromStr.next();
         }
 
-        return txt2;
+        return gPassword;
     }
 
     public class helper extends SQLiteOpenHelper{

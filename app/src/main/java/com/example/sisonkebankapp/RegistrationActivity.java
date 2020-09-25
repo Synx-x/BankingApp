@@ -79,8 +79,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     sql.close();
                     //loads new credentials into constructor
                     credentials = new credentials(regEmail, regPassword);
-                    credentials.setDbEmail(sql.get());
-                    credentials.setDbPassword(sql.get());
+                    credentials.setDbEmail(sql.getUserName());
+                    credentials.setDbPassword(sql.getUserName());
                     //once credentials have been registered, this will redirect the user to the login page
                     startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                     //message saying registration was successful

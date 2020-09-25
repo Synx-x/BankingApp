@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
        fEmail = sql.getUserEmail();
        fPwd = sql.getUserPwd();
 
-
         //button redirects to the registration activity if user doesn't have account
         uiRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
                     isValid = validateLogin(inputEmail, inputPassword);
                     if(!isValid){
                        Toast.makeText(MainActivity.this, "Incorrect Login Details", Toast.LENGTH_SHORT).show();
-                      //  Toast.makeText(MainActivity.this, fEmail+"1", Toast.LENGTH_SHORT).show();
-                       // Toast.makeText(MainActivity.this, fPwd+"2", Toast.LENGTH_SHORT).show();
+                      Toast.makeText(MainActivity.this, fEmail+"1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, fPwd+"2", Toast.LENGTH_SHORT).show();
 
                     }else{
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
