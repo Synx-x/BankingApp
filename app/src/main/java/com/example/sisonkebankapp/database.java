@@ -2,6 +2,7 @@ package com.example.sisonkebankapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -31,7 +32,11 @@ public class database {
 
     public database(RegistrationActivity registrationActivity) {
         c = registrationActivity;
-        
+
+    }
+
+    public database(MainPageActivity mainPageActivity) {
+        c= mainPageActivity;
     }
 
     public void addUser(String regFname, String regLname, String regEmail, String regPassword, String regMobile) {
@@ -55,6 +60,22 @@ public class database {
 
     public void close() {
         s.close();
+    }
+
+    public String get(){
+        h = new helper(c);
+        s = h.getReadableDatabase();
+        String txt ="";
+        String[] col={fName,lName};
+        //fetches all data
+        Cursor c = s.query(table, col, null, null, null, null, null);
+        c.moveToFirst();
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+
+            txt = txt+c.getString(0)+" "+c.getString(1)+"\n";
+        }
+
+        return txt;
     }
 
     public class helper extends SQLiteOpenHelper{
