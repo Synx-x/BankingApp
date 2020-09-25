@@ -41,16 +41,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //getting user input from the 2 input fields
-                String inputName = uiEmail.getText().toString();
+                String inputEmail = uiEmail.getText().toString();
                 String inputPassword = uiPassword.getText().toString();
 
                 //validating inputs provided by a user
-                if(inputName.isEmpty() || inputPassword.isEmpty())
+                if(inputEmail.isEmpty() || inputPassword.isEmpty())
                 {
                     Toast.makeText(MainActivity.this, "Please enter all your details correctly.", Toast.LENGTH_SHORT).show();
                 }else {
 
-                    isValid = validateLogin(inputName, inputPassword);
+                    isValid = validateLogin(inputEmail, inputPassword);
                     if(!isValid){
                         Toast.makeText(MainActivity.this, "Incorrect Login Details", Toast.LENGTH_SHORT).show();
                     }else{
@@ -59,10 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         //once login is successful, this intent redirects to the main page activity
 
                         //create intent
-                        Intent intent = new Intent(MainActivity.this, MainPageActivity.class);
-
-                        //start intent
-                        startActivity(intent);
+                        startActivity(new Intent(MainActivity.this, MainPageActivity.class));
 
                     }
 
@@ -70,10 +67,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    //validate credentials on database
+    //validate credentials on database and checks if you have credentials
     private boolean validateLogin(String email, String password){
-        if(email.equalsIgnoreCase(RegistrationActivity.credentials.getDbEmail()) && password.equalsIgnoreCase(RegistrationActivity.credentials.getDbPassword())){
-            return true;
+        if(RegistrationActivity.credentials != null){
+            if(email.equalsIgnoreCase(RegistrationActivity.credentials.getDbEmail()) && password.equals(RegistrationActivity.credentials.getDbPassword())){
+                return true;
+            }
         }
         return false;
     }

@@ -18,10 +18,13 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText rPassword;
     private EditText rEmail;
     private EditText rMobile;
-    private RadioButton rMale;
-    private RadioButton rFemale;
+    //private RadioButton rMale;
+    //private RadioButton rFemale;
     private Button rCreate;
     private TextView rLoginRedirect;
+    database sql;
+
+
 
     public static credentials credentials;
 
@@ -41,6 +44,14 @@ public class RegistrationActivity extends AppCompatActivity {
         rCreate = findViewById(R.id.regCreate);
         rLoginRedirect = findViewById(R.id.redirect);
 
+        //sql object
+        sql=new database(RegistrationActivity.this);
+
+
+
+
+
+
         //button redirects to the login activity if user does have account
         rLoginRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,10 +70,13 @@ public class RegistrationActivity extends AppCompatActivity {
                 String regEmail = rEmail.getText().toString();
                 String regPassword = rPassword.getText().toString();
                 String regMobile = rMobile.getText().toString();
-                String regFemale = rFemale.getText().toString();
-                String regmale = rMale.getText().toString();
+             //   String regFemale = rFemale.getText().toString();
+               // String regmale = rMale.getText().toString();
 
                 if(validate(regFname,regLname,regEmail,regPassword,regMobile)){
+                    sql.open();
+                    sql.addUser(regFname, regLname,  regEmail, regPassword, regMobile);
+                    sql.close();
                     //loads new credentials into constructor
                     credentials = new credentials(regEmail, regPassword);
                     //once credentials have been registered, this will redirect the user to the login page
@@ -77,7 +91,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     //validates credentials against the required information in order to register an account
     private boolean validate(String name, String lname, String email, String password, String mobile){
-        if(name.isEmpty() || lname.isEmpty() || email.isEmpty() || password.length() < 5 || mobile.length() <10 ){
+        if(name.isEmpty() || lname.isEmpty() || email.isEmpty() || password.length() < 5 || mobile.length() < 10 ){
             Toast.makeText(this, "Enter your details correctly/n Password must be at least 8 characters /n Mobile Number must be 10 digits", Toast.LENGTH_LONG).show();
             return false;
         }
