@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     String fPwd;
     String inputEmail;
     String inputPassword;
+
+    //sql object
     database sql;
 
     //regular expression to check password
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         uiLogin = findViewById(R.id.login);
         uiRegister = findViewById(R.id.register);
 
-        //sql object
+        //sql database link
         sql=new database(MainActivity.this);
 
        fEmail = sql.getUserEmail();

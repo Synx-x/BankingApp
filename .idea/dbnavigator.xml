@@ -38,7 +38,9 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="eae69828-317d-403f-83b5-f78826618035" object-ref="schemas/main/tables/users" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="eae69828-317d-403f-83b5-f78826618035" />
@@ -85,7 +87,7 @@
           <port value="1234" />
           <database value="database" />
           <files>
-            <file path="D:\Files\Documents\AndroidStudio\DeviceExplorer\Pixel_3a_XL_API_30 [emulator-5554]\data\data\com.example.sisonkebankapp\databases\db" schema="main" />
+            <file path="D:\Files\Documents\AndroidStudio\DeviceExplorer\Pixel_3a_XL_API_30 [emulator-5554]\data\data\com.example.sisonkebankapp\databases\db_2" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />
