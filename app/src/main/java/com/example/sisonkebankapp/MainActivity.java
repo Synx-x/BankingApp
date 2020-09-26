@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     private EditText uiEmail;
@@ -21,6 +24,19 @@ public class MainActivity extends AppCompatActivity {
     String inputEmail;
     String inputPassword;
     database sql;
+
+    //regular expression to check password
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    //"(?=.*[0-9])" +         //at least 1 digit
+                    //"(?=.*[a-z])" +         //at least 1 lower case letter
+                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z0-9])" +      //any letter and digit
+                  //  "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                 //   "(?=\\S+$)" +           //no white spaces
+                    ".{5,20}" +               //at least 5 characters
+                    "$");
+
 
     credentials credentials = new credentials("admin", "12345");
 
@@ -61,13 +77,20 @@ public class MainActivity extends AppCompatActivity {
                 if(inputEmail.isEmpty() || inputPassword.isEmpty())
                 {
                     Toast.makeText(MainActivity.this, "Please enter all your details correctly.", Toast.LENGTH_SHORT).show();
-                }else {
+                    //validates email is an actual email using regular expressions
+                }else if(!Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()){
+                    Toast.makeText(MainActivity.this, "Please Enter a Valid Email Address.", Toast.LENGTH_SHORT).show();
+                    //validates password with a regular expression that checks if its at least 5 characters long
+                }else if(!PASSWORD_PATTERN.matcher(inputPassword).matches()){
+                    Toast.makeText(MainActivity.this, "Please Enter a Password with at least 5 characters.", Toast.LENGTH_SHORT).show();
+                }
+                else {
 
                     isValid = validateLogin(inputEmail, inputPassword);
                     if(!isValid){
                        Toast.makeText(MainActivity.this, "Incorrect Login Details", Toast.LENGTH_SHORT).show();
-                      Toast.makeText(MainActivity.this, fEmail+"1", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(MainActivity.this, fPwd+"2", Toast.LENGTH_SHORT).show();
+                   //   Toast.makeText(MainActivity.this, fEmail+"1", Toast.LENGTH_SHORT).show();
+                    //   Toast.makeText(MainActivity.this, fPwd+"2", Toast.LENGTH_SHORT).show();
 
                     }else{
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();

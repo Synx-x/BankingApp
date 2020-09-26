@@ -15,7 +15,7 @@
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="none|number|numberDecimal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.812"
