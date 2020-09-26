@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     boolean isValid = false;
     String fEmail;
     String fPwd;
+    String inputEmail;
+    String inputPassword;
     database sql;
 
     credentials credentials = new credentials("admin", "12345");
@@ -52,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //getting user input from the 2 input fields
-                String inputEmail = uiEmail.getText().toString();
-                String inputPassword = uiPassword.getText().toString();
+                 inputEmail = uiEmail.getText().toString();
+                 inputPassword = uiPassword.getText().toString();
 
                 //validating inputs provided by a user
                 if(inputEmail.isEmpty() || inputPassword.isEmpty())

@@ -70,12 +70,14 @@ public class RegistrationActivity extends AppCompatActivity {
                 String regEmail = rEmail.getText().toString();
                 String regPassword = rPassword.getText().toString();
                 String regMobile = rMobile.getText().toString();
+                String current = "5000";
+                String savings = "8000";
              //   String regFemale = rFemale.getText().toString();
                // String regmale = rMale.getText().toString();
 
                 if(validate(regFname,regLname,regEmail,regPassword,regMobile)){
                     sql.open();
-                    sql.addUser(regFname, regLname,  regEmail, regPassword, regMobile);
+                    sql.addUser(regFname, regLname,  regEmail, regPassword, regMobile, current, savings);
                     sql.close();
                     //loads new credentials into constructor
                     credentials = new credentials(regEmail, regPassword);
