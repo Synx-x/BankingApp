@@ -26,12 +26,12 @@ public class Transfer extends AppCompatActivity {
 
         db = new database(this);
 
-        db.getUserCurrent();
-        String account = db.getUserCurrent();
-   //     String savings = db.getUserCurrent1();
+        db.getUserTransfer();
+        String account = db.getUserTransfer();
+
 
         tCurrent.append(account);
-     //   tSavings.append(savings);
+
 
     }
 }

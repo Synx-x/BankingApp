@@ -160,12 +160,12 @@ public class database {
         return gPassword;
     }
 
-    public String getUserCurrent(){
+    public String getUserTransfer(){
         h = new helper(c);
         s = h.getReadableDatabase();
         String txt1 ="";
         String txt2 ="";
-        String[] col ={savings, current};
+        String[] col ={current, savings};
         //fetches all data
         Cursor c = s.query(table, col, null, null, null, null, null);
         c.moveToFirst();
@@ -175,14 +175,15 @@ public class database {
             txt1 = txt1+c.getString(0)+" ";
             txt2 = txt2+c.getString(1)+" ";
 
-            Scanner fromStr = new Scanner(txt2);
-            Scanner fromStr2 = new Scanner(txt1);
+            Scanner fromStr = new Scanner(txt1);
+            Scanner fromStr2 = new Scanner(txt2);
 
-            gCurrent = fromStr.next();
-            gSavings = fromStr2.next();
+
+            gBalance = "R"+fromStr.next()+"\n\n"+
+                    "R"+fromStr2.next();
         }
 
-        return gCurrent;
+        return gBalance;
     }
 
     public String getUserCurrent1(){
