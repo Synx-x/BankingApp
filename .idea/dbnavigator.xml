@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="eae69828-317d-403f-83b5-f78826618035">
-        <schema name="main" object-types="constraint, view, dataset trigger, index, table, column" />
+        <schema name="main" object-types="column, table, constraint, index, dataset trigger" />
       </connection>
     </loaded-nodes>
   </component>
@@ -87,7 +87,7 @@
           <port value="1234" />
           <database value="database" />
           <files>
-            <file path="D:\Files\Documents\AndroidStudio\DeviceExplorer\Pixel_3a_XL_API_30 [emulator-5554]\data\data\com.example.sisonkebankapp\databases\db_2" schema="main" />
+            <file path="D:\Files\Documents\AndroidStudio\DeviceExplorer\Pixel_3a_XL_API_30 [emulator-5554]\data\data\com.example.sisonkebankapp\databases\db_3" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

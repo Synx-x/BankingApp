@@ -11,6 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
     String fPwd;
     String inputEmail;
     String inputPassword;
+    String store="";
+    String[] dbEmails;
+    String[] dbPass;
+    String part1;
+    String part2;
+    private static final String fileName = "increment.txt";
+    private int increment=0;
 
     //sql object
     database sql;
@@ -59,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
        fEmail = sql.getUserEmail();
        fPwd = sql.getUserPwd();
 
+
+
+
         //button redirects to the registration activity if user doesn't have account
         uiRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,10 +106,11 @@ public class MainActivity extends AppCompatActivity {
                     isValid = validateLogin(inputEmail, inputPassword);
                     if(!isValid){
                        Toast.makeText(MainActivity.this, "Incorrect Login Details", Toast.LENGTH_SHORT).show();
-                   //   Toast.makeText(MainActivity.this, fEmail+"1", Toast.LENGTH_SHORT).show();
-                    //   Toast.makeText(MainActivity.this, fPwd+"2", Toast.LENGTH_SHORT).show();
+              //      Toast.makeText(MainActivity.this, "Data in store: \n"+part2+"1", Toast.LENGTH_LONG).show();
+                   //    Toast.makeText(MainActivity.this, fPwd+"2", Toast.LENGTH_SHORT).show();
 
                     }else{
+
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                         //once login is successful, this intent redirects to the main page activity
@@ -111,10 +127,40 @@ public class MainActivity extends AppCompatActivity {
     //validate credentials on database and checks if you have credentials
     private boolean validateLogin(String email, String password){
 
-            if(email.equalsIgnoreCase(fEmail) && password.equals(fPwd)){
+        dbEmails =fEmail.split(",");
+        dbPass = fPwd.split(",");
+
+        for (int i = 0; i < 1000; i++) {
+
+            part1 =dbEmails[i];
+            part2 =dbPass[i];
+
+            if(email.equalsIgnoreCase(part1) && password.equals(part2)){
+                
+                String inc = String.valueOf(i);
+                FileOutputStream fos = null;
+                try {
+                    fos = openFileOutput(fileName, MODE_PRIVATE);
+                    fos.write(inc.getBytes());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }finally {
+                    if(fos != null){
+                        try {
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
                 return true;
+
             }
 
+        }
         return false;
     }
 

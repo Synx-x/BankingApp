@@ -25,6 +25,7 @@ public class RegistrationActivity extends AppCompatActivity {
     //private RadioButton rFemale;
     private Button rCreate;
     private TextView rLoginRedirect;
+    String dbEmail;
     database sql;
 
     //regular expression to check password
@@ -63,8 +64,7 @@ public class RegistrationActivity extends AppCompatActivity {
         sql=new database(RegistrationActivity.this);
 
 
-
-
+          dbEmail = sql.getUserEmail();
 
 
         //button redirects to the login activity if user does have account
@@ -112,6 +112,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private boolean validate(String name, String lname, String email, String password, String mobile){
         if(name.isEmpty() || lname.isEmpty()){
             Toast.makeText(this, "First Name or Last Name is Empty.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, dbEmail+"", Toast.LENGTH_SHORT).show();
             return false;
         }else if(email.isEmpty()){
             Toast.makeText(this, "Email is Empty.", Toast.LENGTH_SHORT).show();
@@ -119,6 +120,9 @@ public class RegistrationActivity extends AppCompatActivity {
         }else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             Toast.makeText(RegistrationActivity.this, "Please Enter a Valid Email Address.", Toast.LENGTH_SHORT).show();
            return false;
+        }else if(dbEmail.equals(email)){
+            Toast.makeText(this, "Email Already Exists. Enter a Different Email.", Toast.LENGTH_SHORT).show();
+            return false;
         }else if(mobile.isEmpty()){
             Toast.makeText(this, "Please Enter a Phone Number.", Toast.LENGTH_SHORT).show();
             return false;

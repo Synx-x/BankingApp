@@ -104,7 +104,7 @@ public class database {
         c.moveToFirst();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
 
-            txt = txt+c.getString(0)+" ";
+            txt = txt+c.getString(0)+",";
 
             Scanner fromStr = new Scanner(txt);
             namePlate = fromStr.next();
@@ -114,27 +114,32 @@ public class database {
         return namePlate;
     }
 
-    public String getUserEmail(){
+    public String getUserEmail() {
         h = new helper(c);
         s = h.getReadableDatabase();
-        String txt1 ="";
-        String txt2 ="";
-        String[] col ={email, password};
+        String txt1 = "";
+        String txt2 = "";
+        String[] col = {email, password};
         //fetches all data
+
         Cursor c = s.query(table, col, null, null, null, null, null);
-        c.moveToFirst();
-        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+        if (c.moveToFirst()) {
+            for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
 
-            txt1 = txt1+c.getString(0)+" ";
+                txt1 = txt1 + c.getString(0)+",";
 
 
-            Scanner fromStr = new Scanner(txt1);
+                Scanner fromStr = new Scanner(txt1);
 
-            gEmail = fromStr.next();
+                gEmail = fromStr.next();
 
+            }
+
+            return gEmail;
+        }else{
+            gEmail ="";
+            return gEmail;
         }
-
-        return gEmail;
     }
 
     public String getUserPwd(){
@@ -145,19 +150,23 @@ public class database {
         String[] col ={email, password};
         //fetches all data
         Cursor c = s.query(table, col, null, null, null, null, null);
-        c.moveToFirst();
-        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+        if(c.moveToFirst()) {
+            for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
 
 
-            txt2 = txt2+c.getString(1)+" ";
+                txt2 = txt2 + c.getString(1) + ",";
 
-            Scanner fromStr = new Scanner(txt2);
+                Scanner fromStr = new Scanner(txt2);
 
 
-            gPassword = fromStr.next();
+                gPassword = fromStr.next();
+            }
+
+            return gPassword;
+        }else{
+            gPassword ="";
+            return gPassword;
         }
-
-        return gPassword;
     }
 
     public String getUserTransfer(){
@@ -172,43 +181,42 @@ public class database {
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
 
 
-            txt1 = txt1+c.getString(0)+" ";
-            txt2 = txt2+c.getString(1)+" ";
+            txt1 = txt1+c.getString(0)+",";
+
 
             Scanner fromStr = new Scanner(txt1);
-            Scanner fromStr2 = new Scanner(txt2);
 
 
-            gBalance = "R"+fromStr.next()+"\n\n"+
-                    "R"+fromStr2.next();
+
+            gBalance = "R"+fromStr.next();
         }
 
         return gBalance;
     }
 
-    public String getUserCurrent1(){
+    public String getUserTransfer1(){
         h = new helper(c);
         s = h.getReadableDatabase();
         String txt1 ="";
         String txt2 ="";
-        String[] col ={savings, current};
+        String[] col ={current, savings};
         //fetches all data
         Cursor c = s.query(table, col, null, null, null, null, null);
         c.moveToFirst();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
 
 
-            txt1 = txt1+c.getString(0)+" ";
-            txt2 = txt2+c.getString(1)+" ";
+            txt1 = txt1+c.getString(1)+",";
 
-            Scanner fromStr = new Scanner(txt2);
-            Scanner fromStr2 = new Scanner(txt1);
 
-            gCurrent = fromStr.next();
-            gSavings = fromStr2.next();
+            Scanner fromStr = new Scanner(txt1);
+
+
+
+            gBalance = "R"+fromStr.next();
         }
 
-        return gSavings;
+        return gBalance;
     }
 
     public String getUserBalance(){
@@ -225,20 +233,88 @@ public class database {
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
 
 
-            txt1 = txt1+c.getString(0)+" ";
-            txt2 = txt2+c.getString(1)+" ";
-            txt3 = txt3+c.getString(2)+" ";
-            txt4 = txt4+c.getString(3)+" ";
+            txt1 = txt1+c.getString(0)+",";
+
 
             Scanner fromStr = new Scanner(txt1);
-            Scanner fromStr2 = new Scanner(txt2);
-            Scanner fromStr3 = new Scanner(txt3);
-            Scanner fromStr4 = new Scanner(txt4);
 
-            gBalance = "Account Holder Name: "+fromStr.next()+"\n"+
-                    "Account Holder Surname: "+fromStr2.next()+"\n"+
-                    "Current Account Balance: R"+fromStr3.next()+"\n"+
-                    "Savings Account Balance: R"+fromStr4.next();
+
+            gBalance = fromStr.next()+"\n";
+        }
+
+        return gBalance;
+    }
+    public String getUserBalance1(){
+        h = new helper(c);
+        s = h.getReadableDatabase();
+        String txt1 ="";
+        String txt2 ="";
+        String txt3 ="";
+        String txt4 ="";
+        String[] col ={fName, lName, current, savings};
+        //fetches all data
+        Cursor c = s.query(table, col, null, null, null, null, null);
+        c.moveToFirst();
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+
+
+            txt1 = txt1+c.getString(1)+",";
+
+
+            Scanner fromStr = new Scanner(txt1);
+
+
+            gBalance = fromStr.next()+"\n";
+        }
+
+        return gBalance;
+    }
+    public String getUserBalance2(){
+        h = new helper(c);
+        s = h.getReadableDatabase();
+        String txt1 ="";
+        String txt2 ="";
+        String txt3 ="";
+        String txt4 ="";
+        String[] col ={fName, lName, current, savings};
+        //fetches all data
+        Cursor c = s.query(table, col, null, null, null, null, null);
+        c.moveToFirst();
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+
+
+            txt1 = txt1+c.getString(2)+",";
+
+
+            Scanner fromStr = new Scanner(txt1);
+
+
+            gBalance = fromStr.next()+"\n";
+        }
+
+        return gBalance;
+    }
+    public String getUserBalance3(){
+        h = new helper(c);
+        s = h.getReadableDatabase();
+        String txt1 ="";
+        String txt2 ="";
+        String txt3 ="";
+        String txt4 ="";
+        String[] col ={fName, lName, current, savings};
+        //fetches all data
+        Cursor c = s.query(table, col, null, null, null, null, null);
+        c.moveToFirst();
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+
+
+            txt1 = txt1+c.getString(3)+",";
+
+
+            Scanner fromStr = new Scanner(txt1);
+
+
+            gBalance = fromStr.next()+"\n";
         }
 
         return gBalance;

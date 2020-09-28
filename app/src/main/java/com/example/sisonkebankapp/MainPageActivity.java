@@ -10,12 +10,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class MainPageActivity extends AppCompatActivity {
 
     private TextView uiUsername;
     private Button uiBalance;
     private Button uiTransfer;
     private Button uiLogout;
+    private String[] user;
+    String newInt;
     database sql;
 
     @Override
@@ -35,8 +44,39 @@ public class MainPageActivity extends AppCompatActivity {
         RegistrationActivity reg;
         reg = new RegistrationActivity();
         String txt = sql.getUserName();
-        uiUsername.setText(txt);
-      //  Toast.makeText(MainPageActivity.this, txt+"", Toast.LENGTH_LONG).show();
+        user = txt.split(",");
+
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput("increment.txt");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+            while ((text = br.readLine()) != null){
+                 sb.append(text);
+            }
+
+          //  uiUsername.setText(sb.toString());
+            newInt = sb.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fis != null){
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+         String namePlate = user[Integer.parseInt(newInt)];
+
+           uiUsername.setText(namePlate);
+      // Toast.makeText(MainPageActivity.this, newInt+"", Toast.LENGTH_LONG).show();
 
         uiBalance.setOnClickListener(new View.OnClickListener() {
             @Override
