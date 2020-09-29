@@ -168,7 +168,15 @@ FIX, CAUSES CRASHING
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        String selectedItem = parent.getItemAtPosition(position).toString();
+        switch (selectedItem){
+            case"Current to Savings":
+             //   CtS();
+                break;
+            case "Savings to Current":
+          //      StC();
+                break;
+        }
     }
 
     @Override
