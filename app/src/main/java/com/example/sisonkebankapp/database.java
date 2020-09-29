@@ -165,7 +165,6 @@ public class database {
             do {
 
                 existEmail = cursor.getString(0);
-                System.out.println("Checking email " + existEmail);
                 if (existEmail.equals(userEmail)) {
                     return true;
                 }
