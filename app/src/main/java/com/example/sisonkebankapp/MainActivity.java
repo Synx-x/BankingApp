@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     String[] dbPass;
     String part1;
     String part2;
+    int i;
     private static final String fileName = "increment.txt";
     private int increment=0;
 
@@ -130,36 +131,40 @@ public class MainActivity extends AppCompatActivity {
         dbEmails =fEmail.split(",");
         dbPass = fPwd.split(",");
 
-        for (int i = 0; i < 1000; i++) {
+        try {
+            for (i = 0; i < 10; i++) {
 
-            part1 =dbEmails[i];
-            part2 =dbPass[i];
+                part1 = dbEmails[i];
+                part2 = dbPass[i];
 
-            if(email.equalsIgnoreCase(part1) && password.equals(part2)){
-                
-                String inc = String.valueOf(i);
-                FileOutputStream fos = null;
-                try {
-                    fos = openFileOutput(fileName, MODE_PRIVATE);
-                    fos.write(inc.getBytes());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }finally {
-                    if(fos != null){
-                        try {
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                if (email.equalsIgnoreCase(part1) && password.equals(part2)) {
+
+                    String inc = String.valueOf(i);
+                    FileOutputStream fos = null;
+                    try {
+                        fos = openFileOutput(fileName, MODE_PRIVATE);
+                        fos.write(inc.getBytes());
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
+
+                    return true;
+
                 }
 
-                return true;
-
             }
-
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return false;
     }
