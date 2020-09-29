@@ -8,9 +8,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class database {
+
+public class database{
 
     //database name
     String database="db";
@@ -31,6 +37,7 @@ public class database {
     public String gEmail;
     public String gPassword;
     public String namePlate;
+    String newInt;
     String gCurrent;
     String gSavings;
     String gBalance;
@@ -86,15 +93,25 @@ public class database {
     }
 
     public void updateBalance(String regCurrent, String regSavings) {
+        h = new helper(c);
+        SQLiteDatabase update = h.getWritableDatabase();
         ContentValues cv = new ContentValues();
         //maps data from Transfer activity to database
+
         cv.put(current, regCurrent);
         cv.put(savings, regSavings);
 
-        //puts data to table
-        s.insert(table, null, cv);
+
+        Transfer t = new Transfer();
+       String newID =t.newInt;
+
+
+
+        update.update(table, cv, "id=" + id,null);
 
     }
+
+
 
     public void open() {
         h = new helper(c);
@@ -153,6 +170,7 @@ public class database {
         }
     }
 
+    //checks if an email has already been used
     public boolean checkIfExists(String userEmail){
 
         String query = "select "+ email + " from " +table;
@@ -171,6 +189,7 @@ public class database {
         return false;
     }
 
+    //checks the login password
     public String getUserPwd(){
         h = new helper(c);
         s = h.getReadableDatabase();
@@ -198,6 +217,7 @@ public class database {
         }
     }
 
+    //retrieves the current account value
     public String getUserTransfer(){
         h = new helper(c);
         s = h.getReadableDatabase();
@@ -217,12 +237,13 @@ public class database {
 
 
 
-            gBalance = "R"+fromStr.next();
+            gBalance = fromStr.next();
         }
 
         return gBalance;
     }
 
+    //retrieves the savings account value
     public String getUserTransfer1(){
         h = new helper(c);
         s = h.getReadableDatabase();
@@ -242,12 +263,14 @@ public class database {
 
 
 
-            gBalance = "R"+fromStr.next();
+            gBalance = fromStr.next();
         }
 
         return gBalance;
     }
 
+    //retrieves the users balance information from name, surname, and account balances
+    //0,1,2,3
     public String getUserBalance(){
         h = new helper(c);
         s = h.getReadableDatabase();
@@ -374,6 +397,8 @@ public class database {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("DROP TABLE IF EXISTS "+table);
         }
+
+
 
     }
 

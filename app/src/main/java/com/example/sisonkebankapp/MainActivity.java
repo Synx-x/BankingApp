@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //create intent
                         startActivity(new Intent(MainActivity.this, MainPageActivity.class));
-
+                        finish();
                     }
 
                 }

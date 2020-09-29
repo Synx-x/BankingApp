@@ -115,7 +115,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private boolean validate(String name, String lname, String email, String password, String mobile){
         if(name.isEmpty() || lname.isEmpty()){
             Toast.makeText(this, "First Name or Last Name is Empty.", Toast.LENGTH_LONG).show();
-            Toast.makeText(this, dbEmail+"", Toast.LENGTH_SHORT).show();
             return false;
         }else if(email.isEmpty()){
             Toast.makeText(this, "Email is Empty.", Toast.LENGTH_SHORT).show();

@@ -22,23 +22,32 @@ import java.io.InputStreamReader;
 public class Transfer extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private TextView tCurrent;
-   // private TextView tSavings;
     private TextView tInput;
     private Button tTransfer;
+
     String[] uAcocunt;
     String[] uAcocunt1;
-    String[] newCurrent;
-    String[] newSavings;
-    String fCurrent;
-    String fSavings;
+
     int trCurrent;
     int trSavings;
+
+    int intCurrent;
+    int intSavings;
+    int intInput;
+
+    String stringCurrent;
+    String stringSavings;
+
     String newsC="";
     String newsS="";
+
     String uInput;
-    String newInt;
+
+    static String newInt;
+
     String sC;
     String sS;
+
     database db;
 
     @Override
@@ -56,7 +65,6 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tCurrent = findViewById(R.id.tCurrent);
-      //  tSavings = findViewById(R.id.transfer);
         tInput = findViewById(R.id.tInput);
         tTransfer = findViewById(R.id.tTransfer);
 
@@ -68,7 +76,7 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
         uAcocunt = account.split(",");
         uAcocunt1 = account2.split(",");
 
-        //reads user id from secure file thats created to track the users id in the database
+        //reads user id from secure file that's created to track the users id in the database
         FileInputStream fis = null;
         try {
             fis = openFileInput("increment.txt");
@@ -101,77 +109,29 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
         String str = sC;
         for(int i=1; i<str.length();i++) {
             char ch = str.charAt(i);
-            // System.out.println("Character at "+i+" Position: "+ch);
-          //  Toast.makeText(this, ch + "New Int", Toast.LENGTH_SHORT).show();
+
            newsC+=ch;
 
         }
         String str1 = sS;
         for(int i=1; i<str1.length();i++) {
             char ch = str1.charAt(i);
-            // System.out.println("Character at "+i+" Position: "+ch);
-            //  Toast.makeText(this, ch + "New Int", Toast.LENGTH_SHORT).show();
+
             newsS+=ch;
 
         }
-        int intCurrent = Integer.parseInt(newsC);
-        int intSavings = Integer.parseInt(newsS);
-        Toast.makeText(this, intCurrent+ "Current"+intSavings+"Savings", Toast.LENGTH_SHORT).show();
+         intCurrent =  Integer.parseInt(sC);
+         intSavings = Integer.parseInt(sS);
+
         String fAccount = sC+"\n"+"\n"+sS;
 
         tCurrent.append(fAccount);
 
-       final String stringCurrent = Integer.toString(intCurrent);
-       final String stringSavings = Integer.toString(intSavings);
-
-
-        tTransfer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //get user input of transfer amount
-                uInput = tInput.getText().toString();
-
-                if(validate(stringCurrent, stringSavings)){
-                    db.open();
-                 //   db.updateBalance(String.valueOf(trCurrent), String.valueOf(trSavings));
-                  //  db.close();
-
-                    Toast.makeText(Transfer.this, "Transfer completed Successfully", Toast.LENGTH_LONG).show();
-                    //refreshes the page once the transaction is complete and loads the new balances
-                    finish();
-                    overridePendingTransition( 0, 0);
-                    startActivity(getIntent());
-                    overridePendingTransition( 0, 0);
-
-                }
-            }
-        });
+         stringCurrent = Integer.toString(intCurrent);
+         stringSavings = Integer.toString(intSavings);
 
 
 
-    }
-
-
-    public int getNewCurrent(int current, int input){
-        return current - input;
-    }
-    public int getNewSavings(int savings, int input){
-        return savings - input;
-    }
-    public int transferToCurrent(int current, int input){
-        return current + input;
-    }
-    public  int transferToSavings(int savings, int input){
-        return  savings + input;
-    }
-
-    //validates user has sufficient funds before allowing a transaction
-    private boolean validate(String current, String savings){
-        if(Integer.parseInt(current) < Integer.parseInt(uInput) || Integer.parseInt(savings) < Integer.parseInt(uInput)){
-            Toast.makeText(this, "Amount Specified Exceeds Amount Currently Available in Account.", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
 
     }
 
@@ -180,17 +140,129 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
         String selectedItem = parent.getItemAtPosition(position).toString();
         switch (selectedItem){
             case"Current to Savings":
-             //deducts input amount from current
-         //      int adjustedCurrent = getNewCurrent(Integer.parseInt(sC), Integer.parseInt(uInput));
-          //     trCurrent = adjustedCurrent;
-               //adds deducted amount to saving
-          //     int adjustedSavings = transferToSavings(Integer.parseInt(sS), Integer.parseInt(uInput));
-           //    trSavings = adjustedSavings;
+                tTransfer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (tInput.getText().toString().equals("")) {
+                            Toast.makeText(Transfer.this, "Cannot Perform a Transfer. \nEnter a Transfer Amount of at least 1.", Toast.LENGTH_LONG).show();
+                        }else{
+
+                            //get user input of transfer amount
+                            uInput = tInput.getText().toString();
+                            intInput = Integer.parseInt(uInput);
+
+
+                            if(validate(stringCurrent, stringSavings)) {
+                                trSavings = 0;
+                                trCurrent = 0;
+                                //deducts input amount from current
+                                trCurrent = getNewCurrent(intCurrent, intInput);
+
+                                //adds deducted amount to saving
+                                trSavings = transferToSavings(intSavings, intInput);
+
+
+                                String aCurrent = String.valueOf(trCurrent);
+                                String aSavings = String.valueOf(trSavings);
+
+                                db.open();
+                                db.updateBalance(aCurrent, aSavings);
+                                db.close();
+                                Toast.makeText(Transfer.this, "Transfer Completed Successfully", Toast.LENGTH_LONG).show();
+                                //refreshes the page once the transaction is complete and loads the new balances
+                                finish();
+                                overridePendingTransition(0, 0);
+                                startActivity(new Intent(Transfer.this, Transfer.class));
+                                overridePendingTransition(0, 0);
+
+                            }
+                        }
+
+
+                    }
+                });
+
                 break;
             case "Savings to Current":
-          //      StC();
+
+                tTransfer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (tInput.getText().toString().equals("")) {
+                            Toast.makeText(Transfer.this, "Cannot Perform a Transfer. \nEnter a Transfer Amount of at least 1.", Toast.LENGTH_LONG).show();
+                        }else {
+
+                            //get user input of transfer amount
+                            uInput = tInput.getText().toString();
+                            intInput = Integer.parseInt(uInput);
+
+
+
+                            if (validate(stringCurrent, stringSavings)) {
+
+                                //deducts input amount from savings account
+                                trSavings = 0;
+                                trCurrent = 0;
+                                trSavings = getNewSavings(intSavings, intInput);
+                                //adds deducted amount to current account
+                                trCurrent = transferToCurrent(intCurrent, intInput);
+
+                                String aCurrent = String.valueOf(trCurrent);
+                                String aSavings = String.valueOf(trSavings);
+
+                                db.open();
+                                db.updateBalance(aCurrent, aSavings);
+                                db.close();
+
+                                Toast.makeText(Transfer.this, "Transfer Completed Successfully", Toast.LENGTH_LONG).show();
+                                //refreshes the page once the transaction is complete and loads the new balances
+                                finish();
+                                overridePendingTransition(0, 0);
+                                startActivity(new Intent(Transfer.this, Transfer.class));
+                                overridePendingTransition(0, 0);
+
+                            }
+                        }
+
+
+
+                    }
+                });
+
+
+
+
                 break;
         }
+    }
+
+    public int getNewCurrent(int current, int input){
+                int sum=current-input;
+        return sum;
+    }
+    public int getNewSavings(int savings, int input){
+                int sum=savings-input;
+        return sum;
+    }
+    public int transferToCurrent(int current, int input){
+                int sum = current+input;
+        return sum;
+    }
+    public  int transferToSavings(int savings, int input){
+                int sum =savings+input;
+        return  sum;
+    }
+
+
+    //validates user has sufficient funds before allowing a transaction
+    private boolean validate(String current, String savings){
+        if(Integer.parseInt(savings) < Integer.parseInt(uInput) && Integer.parseInt(current) < Integer.parseInt(uInput)){
+            Toast.makeText(this, "Amount Specified Exceeds Amount Currently Available in Account.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     @Override

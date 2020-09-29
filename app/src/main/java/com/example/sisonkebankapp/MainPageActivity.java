@@ -99,6 +99,7 @@ public class MainPageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(MainPageActivity.this, MainActivity.class));
                 finish();
+                Toast.makeText(MainPageActivity.this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
             }
         });
 
