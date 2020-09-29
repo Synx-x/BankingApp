@@ -31,6 +31,10 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
     String[] newSavings;
     String fCurrent;
     String fSavings;
+    int trCurrent;
+    int trSavings;
+    String newsC="";
+    String newsS="";
     String uInput;
     String newInt;
     String sC;
@@ -94,23 +98,31 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
              sC = uAcocunt[Integer.parseInt(newInt)];
              sS = uAcocunt1[Integer.parseInt(newInt)];
 
-        String fAccount = uAcocunt[Integer.parseInt(newInt)]+"\n"+"\n"+uAcocunt1[Integer.parseInt(newInt)];
+        String str = sC;
+        for(int i=1; i<str.length();i++) {
+            char ch = str.charAt(i);
+            // System.out.println("Character at "+i+" Position: "+ch);
+          //  Toast.makeText(this, ch + "New Int", Toast.LENGTH_SHORT).show();
+           newsC+=ch;
+
+        }
+        String str1 = sS;
+        for(int i=1; i<str1.length();i++) {
+            char ch = str1.charAt(i);
+            // System.out.println("Character at "+i+" Position: "+ch);
+            //  Toast.makeText(this, ch + "New Int", Toast.LENGTH_SHORT).show();
+            newsS+=ch;
+
+        }
+        int intCurrent = Integer.parseInt(newsC);
+        int intSavings = Integer.parseInt(newsS);
+        Toast.makeText(this, intCurrent+ "Current"+intSavings+"Savings", Toast.LENGTH_SHORT).show();
+        String fAccount = sC+"\n"+"\n"+sS;
 
         tCurrent.append(fAccount);
 
-/*
-
-FIX, CAUSES CRASHING
-
-        String conCatCtS = CtS();
-        String conCatStC = StC();
-
-        newCurrent = conCatCtS.split(",");
-        newSavings = conCatStC.split(",");
-
-        fCurrent = newCurrent[0];
-        fSavings = newCurrent[1];
-*/
+       final String stringCurrent = Integer.toString(intCurrent);
+       final String stringSavings = Integer.toString(intSavings);
 
 
         tTransfer.setOnClickListener(new View.OnClickListener() {
@@ -119,10 +131,10 @@ FIX, CAUSES CRASHING
                 //get user input of transfer amount
                 uInput = tInput.getText().toString();
 
-                if(validate(fCurrent, fSavings)){
+                if(validate(stringCurrent, stringSavings)){
                     db.open();
-                    db.updateBalance(fCurrent, fSavings);
-                    db.close();
+                 //   db.updateBalance(String.valueOf(trCurrent), String.valueOf(trSavings));
+                  //  db.close();
 
                     Toast.makeText(Transfer.this, "Transfer completed Successfully", Toast.LENGTH_LONG).show();
                     //refreshes the page once the transaction is complete and loads the new balances
@@ -139,26 +151,23 @@ FIX, CAUSES CRASHING
 
     }
 
-    public String CtS(){
-        String current =uAcocunt[Integer.parseInt(newInt)];
-        String savings =uAcocunt1[Integer.parseInt(newInt)];
-        int newCurrent = Integer.parseInt(current) - Integer.parseInt(uInput);
-        int newSavings = Integer.parseInt(savings) + Integer.parseInt(uInput);
 
-        return newCurrent+","+newSavings;
+    public int getNewCurrent(int current, int input){
+        return current - input;
     }
-    public String StC(){
-        String current =uAcocunt[Integer.parseInt(newInt)];
-        String savings =uAcocunt1[Integer.parseInt(newInt)];
-        int newCurrent = Integer.parseInt(current) + Integer.parseInt(uInput);
-        int newSavings = Integer.parseInt(savings) - Integer.parseInt(uInput);
-
-        return newCurrent+","+newSavings;
-
+    public int getNewSavings(int savings, int input){
+        return savings - input;
     }
+    public int transferToCurrent(int current, int input){
+        return current + input;
+    }
+    public  int transferToSavings(int savings, int input){
+        return  savings + input;
+    }
+
     //validates user has sufficient funds before allowing a transaction
     private boolean validate(String current, String savings){
-        if(Integer.parseInt(current) > Integer.parseInt(uInput) || Integer.parseInt(savings) > Integer.parseInt(uInput)){
+        if(Integer.parseInt(current) < Integer.parseInt(uInput) || Integer.parseInt(savings) < Integer.parseInt(uInput)){
             Toast.makeText(this, "Amount Specified Exceeds Amount Currently Available in Account.", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -171,7 +180,12 @@ FIX, CAUSES CRASHING
         String selectedItem = parent.getItemAtPosition(position).toString();
         switch (selectedItem){
             case"Current to Savings":
-             //   CtS();
+             //deducts input amount from current
+         //      int adjustedCurrent = getNewCurrent(Integer.parseInt(sC), Integer.parseInt(uInput));
+          //     trCurrent = adjustedCurrent;
+               //adds deducted amount to saving
+          //     int adjustedSavings = transferToSavings(Integer.parseInt(sS), Integer.parseInt(uInput));
+           //    trSavings = adjustedSavings;
                 break;
             case "Savings to Current":
           //      StC();
