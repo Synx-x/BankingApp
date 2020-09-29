@@ -12,6 +12,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -66,7 +70,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
           dbEmail = sql.getUserEmail();
 
-
         //button redirects to the login activity if user does have account
         rLoginRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +123,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             Toast.makeText(RegistrationActivity.this, "Please Enter a Valid Email Address.", Toast.LENGTH_SHORT).show();
            return false;
-        }else if(dbEmail.equals(email)){
+        }else if(sql.checkIfExists(email)){
             Toast.makeText(this, "Email Already Exists. Enter a Different Email.", Toast.LENGTH_SHORT).show();
             return false;
         }else if(mobile.isEmpty()){

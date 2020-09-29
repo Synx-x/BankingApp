@@ -85,6 +85,17 @@ public class database {
 
     }
 
+    public void updateBalance(String regCurrent, String regSavings) {
+        ContentValues cv = new ContentValues();
+        //maps data from Transfer activity to database
+        cv.put(current, regCurrent);
+        cv.put(savings, regSavings);
+
+        //puts data to table
+        s.insert(table, null, cv);
+
+    }
+
     public void open() {
         h = new helper(c);
         s=h.getWritableDatabase();
@@ -140,6 +151,27 @@ public class database {
             gEmail ="";
             return gEmail;
         }
+    }
+
+    public boolean checkIfExists(String userEmail){
+
+
+
+        String query = "select "+ email + " from " +table;
+        Cursor cursor = s.rawQuery(query, null);
+        String existEmail;
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                existEmail = cursor.getString(0);
+                System.out.println("Checking email " + existEmail);
+                if (existEmail.equals(userEmail)) {
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+        return false;
     }
 
     public String getUserPwd(){
@@ -336,7 +368,7 @@ public class database {
         @Override
         public void onCreate(SQLiteDatabase db) {
             //creates the table for the registration page
-            String query = "CREATE TABLE "+table+"("+id+" INTEGER PRIMARY KEY AUTOINCREMENT, "+fName+" TEXT NOT NULL, "+lName+" TEXT NOT NULL, "+email+" TEXT NOT NULL, "+password+" TEXT NOT NULL, "+mobile+" INTEGER NOT NULL, "+current+" LONG NOT NULL, "+savings+" LONG NOT NULL );";
+            String query = "CREATE TABLE "+table+"("+id+" INTEGER PRIMARY KEY AUTOINCREMENT, "+fName+" TEXT NOT NULL, "+lName+" TEXT NOT NULL, "+email+" TEXT NOT NULL, "+password+" TEXT NOT NULL, "+mobile+" CHAR NOT NULL, "+current+" LONG NOT NULL, "+savings+" LONG NOT NULL );";
             //executes the query
             db.execSQL(query);
         }

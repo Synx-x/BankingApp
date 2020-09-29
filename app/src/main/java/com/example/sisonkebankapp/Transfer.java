@@ -2,10 +2,13 @@ package com.example.sisonkebankapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -21,8 +24,14 @@ public class Transfer extends AppCompatActivity {
     private Button tTransfer;
     String[] uAcocunt;
     String[] uAcocunt1;
+    String[] newCurrent;
+    String[] newSavings;
+    String fCurrent;
+    String fSavings;
     String uInput;
     String newInt;
+    String sC;
+    String sS;
     database db;
 
     @Override
@@ -73,17 +82,41 @@ public class Transfer extends AppCompatActivity {
                 }
             }
         }
+             sC = uAcocunt[Integer.parseInt(newInt)];
+             sS = uAcocunt1[Integer.parseInt(newInt)];
 
         String fAccount = uAcocunt[Integer.parseInt(newInt)]+"\n"+"\n"+uAcocunt1[Integer.parseInt(newInt)];
 
         tCurrent.append(fAccount);
 
+/*
 
-        tInput.setOnClickListener(new View.OnClickListener() {
+FIX, CAUSES CRASHING
+
+        String conCatCtS = CtS();
+        String conCatStC = StC();
+
+        newCurrent = conCatCtS.split(",");
+        newSavings = conCatStC.split(",");
+
+        fCurrent = newCurrent[0];
+        fSavings = newCurrent[1];
+*/
+
+
+        tTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //get user input of transfer amount
                 uInput = tInput.getText().toString();
+
+                if(validate(fCurrent, fSavings)){
+                    db.open();
+                    db.updateBalance(fCurrent, fSavings);
+                    db.close();
+
+                    Toast.makeText(Transfer.this, "Transfer completed Successfully", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -97,7 +130,7 @@ public class Transfer extends AppCompatActivity {
         int newCurrent = Integer.parseInt(current) - Integer.parseInt(uInput);
         int newSavings = Integer.parseInt(savings) + Integer.parseInt(uInput);
 
-        return newCurrent+"\n"+"\n"+newSavings;
+        return newCurrent+","+newSavings;
     }
     public String StC(){
         String current =uAcocunt[Integer.parseInt(newInt)];
@@ -105,7 +138,16 @@ public class Transfer extends AppCompatActivity {
         int newCurrent = Integer.parseInt(current) + Integer.parseInt(uInput);
         int newSavings = Integer.parseInt(savings) - Integer.parseInt(uInput);
 
-        return newCurrent+"\n"+"\n"+newSavings;
+        return newCurrent+","+newSavings;
+
+    }
+    //validates user has sufficient funds before allowing a transaction
+    private boolean validate(String current, String savings){
+        if(Integer.parseInt(current) > Integer.parseInt(uInput) || Integer.parseInt(savings) > Integer.parseInt(uInput)){
+            Toast.makeText(this, "Amount Specified Exceeds Amount Currently Available in Account.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
 
     }
 
