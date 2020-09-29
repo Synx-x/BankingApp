@@ -155,8 +155,6 @@ public class database {
 
     public boolean checkIfExists(String userEmail){
 
-
-
         String query = "select "+ email + " from " +table;
         Cursor cursor = s.rawQuery(query, null);
         String existEmail;

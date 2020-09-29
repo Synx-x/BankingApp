@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Transfer extends AppCompatActivity {
+public class Transfer extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private TextView tCurrent;
    // private TextView tSavings;
@@ -38,6 +41,12 @@ public class Transfer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
+
+        Spinner spinner = findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Transaction, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         //button to return to previous activity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -116,6 +125,12 @@ FIX, CAUSES CRASHING
                     db.close();
 
                     Toast.makeText(Transfer.this, "Transfer completed Successfully", Toast.LENGTH_LONG).show();
+                    //refreshes the page once the transaction is complete and loads the new balances
+                    finish();
+                    overridePendingTransition( 0, 0);
+                    startActivity(getIntent());
+                    overridePendingTransition( 0, 0);
+
                 }
             }
         });
@@ -151,4 +166,13 @@ FIX, CAUSES CRASHING
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
