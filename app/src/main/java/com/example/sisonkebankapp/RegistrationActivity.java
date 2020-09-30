@@ -101,8 +101,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     credentials.setDbPassword(sql.getUserName());
 
                     //once BankUser have been registered, this will redirect the user to the login page
-                    startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                     finish();
+                    startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                     //message saying registration was successful
                     Toast.makeText(RegistrationActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                 }
