@@ -37,9 +37,6 @@ public class database{
     public String gEmail;
     public String gPassword;
     public String namePlate;
-    String newInt;
-    String gCurrent;
-    String gSavings;
     String gBalance;
     helper h;
     Context c;
@@ -78,7 +75,8 @@ public class database{
 
     public void addUser(String regFname, String regLname, String regEmail, String regPassword, String regMobile, String regCurrent, String regSavings) {
         ContentValues cv = new ContentValues();
-        //maps data from registration activity to database
+
+       //maps data from registration activity to database
         cv.put(fName, regFname);
         cv.put(lName, regLname);
         cv.put(email, regEmail);
@@ -89,26 +87,21 @@ public class database{
 
         //puts data to table
         s.insert(table, null, cv);
-
     }
 
     public void updateBalance(String regCurrent, String regSavings) {
         h = new helper(c);
         SQLiteDatabase update = h.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        //maps data from Transfer activity to database
 
+        //maps data from Transfer activity to database
         cv.put(current, regCurrent);
         cv.put(savings, regSavings);
-
 
         Transfer t = new Transfer();
        String newID =t.newInt;
 
-
-
         update.update(table, cv, "id=" + id,null);
-
     }
 
 
@@ -122,6 +115,7 @@ public class database{
         s.close();
     }
 
+    //gets user details(First Name)
     public String getUserName(){
         h = new helper(c);
         s = h.getReadableDatabase();
@@ -142,6 +136,7 @@ public class database{
         return namePlate;
     }
 
+    //gets user details(Email)
     public String getUserEmail() {
         h = new helper(c);
         s = h.getReadableDatabase();
@@ -189,7 +184,7 @@ public class database{
         return false;
     }
 
-    //checks the login password
+    //gets user details(Password)
     public String getUserPwd(){
         h = new helper(c);
         s = h.getReadableDatabase();
@@ -318,7 +313,6 @@ public class database{
 
             gBalance = fromStr.next()+"\n";
         }
-
         return gBalance;
     }
     public String getUserBalance2(){
@@ -397,10 +391,5 @@ public class database{
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("DROP TABLE IF EXISTS "+table);
         }
-
-
-
     }
-
-
 }

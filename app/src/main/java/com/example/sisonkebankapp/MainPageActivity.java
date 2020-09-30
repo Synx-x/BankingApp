@@ -23,8 +23,11 @@ public class MainPageActivity extends AppCompatActivity {
     private Button uiBalance;
     private Button uiTransfer;
     private Button uiLogout;
+
     private String[] user;
+
     String newInt;
+
     database sql;
 
     @Override
@@ -34,7 +37,6 @@ public class MainPageActivity extends AppCompatActivity {
 
         //sql object
         sql=new database(MainPageActivity.this);
-
 
         uiUsername = findViewById(R.id.username);
         uiBalance = findViewById(R.id.balance);
@@ -76,8 +78,8 @@ public class MainPageActivity extends AppCompatActivity {
          String namePlate = user[Integer.parseInt(newInt)];
 
            uiUsername.setText(namePlate);
-      // Toast.makeText(MainPageActivity.this, newInt+"", Toast.LENGTH_LONG).show();
 
+        //opens the account balance activity
         uiBalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +87,7 @@ public class MainPageActivity extends AppCompatActivity {
             }
         });
 
-
+        //opens the transfer activity
         uiTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +95,7 @@ public class MainPageActivity extends AppCompatActivity {
             }
         });
 
-
+        //logs the user out
         uiLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,9 +104,5 @@ public class MainPageActivity extends AppCompatActivity {
                 Toast.makeText(MainPageActivity.this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
-
-
 }

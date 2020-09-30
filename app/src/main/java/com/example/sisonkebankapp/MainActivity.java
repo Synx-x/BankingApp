@@ -23,19 +23,22 @@ public class MainActivity extends AppCompatActivity {
     private EditText uiPassword;
     private Button uiLogin;
     private TextView uiRegister;
+
     boolean isValid = false;
+
     String fEmail;
     String fPwd;
     String inputEmail;
     String inputPassword;
-    String store="";
+
     String[] dbEmails;
     String[] dbPass;
+
     String part1;
     String part2;
     int i;
+
     private static final String fileName = "increment.txt";
-    private int increment=0;
 
     //sql object
     database sql;
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     "$");
 
 
-    credentials credentials = new credentials("admin", "12345");
+    credentials credentials = new credentials("", "");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +72,8 @@ public class MainActivity extends AppCompatActivity {
         //sql database link
         sql=new database(MainActivity.this);
 
-       fEmail = sql.getUserEmail();
-       fPwd = sql.getUserPwd();
-
-
-
+        fEmail = sql.getUserEmail();
+        fPwd = sql.getUserPwd();
 
         //button redirects to the registration activity if user doesn't have account
         uiRegister.setOnClickListener(new View.OnClickListener() {
@@ -107,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
                     isValid = validateLogin(inputEmail, inputPassword);
                     if(!isValid){
                        Toast.makeText(MainActivity.this, "Incorrect Login Details", Toast.LENGTH_SHORT).show();
-              //      Toast.makeText(MainActivity.this, "Data in store: \n"+part2+"1", Toast.LENGTH_LONG).show();
-                   //    Toast.makeText(MainActivity.this, fPwd+"2", Toast.LENGTH_SHORT).show();
 
                     }else{
 
@@ -157,16 +155,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
-
                     return true;
-
                 }
-
             }
         }catch (Exception e){
             e.printStackTrace();
         }
         return false;
     }
-
 }

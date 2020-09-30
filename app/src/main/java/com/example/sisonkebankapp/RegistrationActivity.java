@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
+
     //java variables for xml layout
     private EditText rFname;
     private EditText rLname;
@@ -29,7 +30,9 @@ public class RegistrationActivity extends AppCompatActivity {
     //private RadioButton rFemale;
     private Button rCreate;
     private TextView rLoginRedirect;
+
     String dbEmail;
+
     database sql;
 
     //regular expression to check password
@@ -67,7 +70,6 @@ public class RegistrationActivity extends AppCompatActivity {
         //sql object
         sql=new database(RegistrationActivity.this);
 
-
           dbEmail = sql.getUserEmail();
 
         //button redirects to the login activity if user does have account
@@ -90,26 +92,27 @@ public class RegistrationActivity extends AppCompatActivity {
                 String regMobile = rMobile.getText().toString().trim();
                 String current = "5000";
                 String savings = "8000";
-             //   String regFemale = rFemale.getText().toString();
+               // String regFemale = rFemale.getText().toString();
                // String regmale = rMale.getText().toString();
 
                 if(validate(regFname,regLname,regEmail,regPassword,regMobile)){
                     sql.open();
                     sql.addUser(regFname, regLname,  regEmail, regPassword, regMobile, current, savings);
                     sql.close();
+
                     //loads new credentials into constructor
                     credentials = new credentials(regEmail, regPassword);
                     credentials.setDbEmail(sql.getUserName());
                     credentials.setDbPassword(sql.getUserName());
+
                     //once credentials have been registered, this will redirect the user to the login page
                     startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                    finish();
                     //message saying registration was successful
                     Toast.makeText(RegistrationActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
-
     }
     //validates credentials against the required information in order to register an account
     private boolean validate(String name, String lname, String email, String password, String mobile){
@@ -136,6 +139,5 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         }
         return true;
-
     }
 }

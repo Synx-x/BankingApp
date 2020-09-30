@@ -55,6 +55,7 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
 
+        //creates the spinner
         Spinner spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Transaction, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -130,9 +131,6 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
          stringCurrent = Integer.toString(intCurrent);
          stringSavings = Integer.toString(intSavings);
 
-
-
-
     }
 
     @Override
@@ -140,6 +138,7 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
         String selectedItem = parent.getItemAtPosition(position).toString();
         switch (selectedItem){
             case"Current to Savings":
+                //item 1 of spinner, performs current to savings transaction
                 tTransfer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -152,7 +151,6 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
                             uInput = tInput.getText().toString();
                             intInput = Integer.parseInt(uInput);
 
-
                             if(validate(stringCurrent, stringSavings)) {
                                 trSavings = 0;
                                 trCurrent = 0;
@@ -161,7 +159,6 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
 
                                 //adds deducted amount to saving
                                 trSavings = transferToSavings(intSavings, intInput);
-
 
                                 String aCurrent = String.valueOf(trCurrent);
                                 String aSavings = String.valueOf(trSavings);
@@ -178,14 +175,12 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
 
                             }
                         }
-
-
                     }
                 });
-
                 break;
             case "Savings to Current":
 
+                //item 2 of spinner, performs savings to current transaction
                 tTransfer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -197,8 +192,6 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
                             //get user input of transfer amount
                             uInput = tInput.getText().toString();
                             intInput = Integer.parseInt(uInput);
-
-
 
                             if (validate(stringCurrent, stringSavings)) {
 
@@ -222,22 +215,15 @@ public class Transfer extends AppCompatActivity implements AdapterView.OnItemSel
                                 overridePendingTransition(0, 0);
                                 startActivity(new Intent(Transfer.this, Transfer.class));
                                 overridePendingTransition(0, 0);
-
                             }
                         }
-
-
-
                     }
                 });
-
-
-
-
                 break;
         }
     }
 
+    //4 methods for performing calculations for the transactions
     public int getNewCurrent(int current, int input){
                 int sum=current-input;
         return sum;

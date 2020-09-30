@@ -15,11 +15,14 @@ import java.io.InputStreamReader;
 
 public class ViewAccountBalanceActivity extends AppCompatActivity {
     database db;
+
     String[] nBalance;
     String[] nBalance1;
     String[] nBalance2;
     String[] nBalance3;
+
     String newInt;
+
     private TextView uiText;
 
     @Override
@@ -31,7 +34,6 @@ public class ViewAccountBalanceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = new database(this);
-
 
         uiText = findViewById(R.id.accBalance);
 
@@ -57,7 +59,6 @@ public class ViewAccountBalanceActivity extends AppCompatActivity {
                 sb.append(text);
             }
 
-
             newInt = sb.toString();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -74,9 +75,7 @@ public class ViewAccountBalanceActivity extends AppCompatActivity {
         }
 
         //formats user information
-        String balInfo = "Account Holder Name: "+nBalance[Integer.parseInt(newInt)]+"\n"+"Account Holder Surname: "+nBalance1[Integer.parseInt(newInt)]+"\n"+"Current Account Balance: R"+nBalance2[Integer.parseInt(newInt)]+"\n"+"Savings Account Balance: R"+nBalance3[Integer.parseInt(newInt)];
-
-
+        String balInfo = "Account Holder Name: "+nBalance[Integer.parseInt(newInt)]+"\n"+"\n"+"Account Holder Surname: "+nBalance1[Integer.parseInt(newInt)]+"\n"+"\n"+"Current Account Balance: R"+nBalance2[Integer.parseInt(newInt)]+"\n"+"\n"+"Savings Account Balance: R"+nBalance3[Integer.parseInt(newInt)];
 
         //displays user information
         uiText.append(balInfo);
