@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //getting user input from the 2 input fields
-                 inputEmail = uiEmail.getText().toString();
-                 inputPassword = uiPassword.getText().toString();
+                 inputEmail = uiEmail.getText().toString().trim();
+                 inputPassword = uiPassword.getText().toString().trim();
 
                 //validating inputs provided by a user
                 if(inputEmail.isEmpty() || inputPassword.isEmpty())

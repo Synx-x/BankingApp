@@ -83,11 +83,11 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //get user input of credentials
-                String regFname = rFname.getText().toString();
-                String regLname = rLname.getText().toString();
-                String regEmail = rEmail.getText().toString();
-                String regPassword = rPassword.getText().toString();
-                String regMobile = rMobile.getText().toString();
+                String regFname = rFname.getText().toString().trim();
+                String regLname = rLname.getText().toString().trim();
+                String regEmail = rEmail.getText().toString().trim();
+                String regPassword = rPassword.getText().toString().trim();
+                String regMobile = rMobile.getText().toString().trim();
                 String current = "5000";
                 String savings = "8000";
              //   String regFemale = rFemale.getText().toString();
