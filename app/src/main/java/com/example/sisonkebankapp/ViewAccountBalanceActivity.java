@@ -47,7 +47,7 @@ public class ViewAccountBalanceActivity extends AppCompatActivity {
         nBalance2 = balance2.split(",");
         nBalance3 = balance3.split(",");
 
-        //reads user id from secure file thats created to track the users id in the database
+        //reads user id from secure file that's created to track the users id in the database
         FileInputStream fis = null;
         try {
             fis = openFileInput("increment.txt");

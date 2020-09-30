@@ -13,12 +13,10 @@ import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private EditText uiEmail;
     private EditText uiPassword;
     private Button uiLogin;
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     "$");
 
 
-    credentials credentials = new credentials("", "");
+    BankUser credentials = new BankUser("", "");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         uiRegister = findViewById(R.id.register);
 
         //sql database link
-        sql=new database(MainActivity.this);
+        sql=new database(LoginActivity.this);
 
         fEmail = sql.getUserEmail();
         fPwd = sql.getUserPwd();
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         uiRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
             }
         });
 
@@ -94,28 +92,28 @@ public class MainActivity extends AppCompatActivity {
                 //validating inputs provided by a user
                 if(inputEmail.isEmpty() || inputPassword.isEmpty())
                 {
-                    Toast.makeText(MainActivity.this, "Please enter all your details correctly.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please enter all your details correctly.", Toast.LENGTH_SHORT).show();
                     //validates email is an actual email using regular expressions
                 }else if(!Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()){
-                    Toast.makeText(MainActivity.this, "Please Enter a Valid Email Address.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please Enter a Valid Email Address.", Toast.LENGTH_SHORT).show();
                     //validates password with a regular expression that checks if its at least 5 characters long
                 }else if(!PASSWORD_PATTERN.matcher(inputPassword).matches()){
-                    Toast.makeText(MainActivity.this, "Please Enter a Password with at least 5 characters.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please Enter a Password with at least 5 characters.", Toast.LENGTH_SHORT).show();
                 }
                 else {
 
                     isValid = validateLogin(inputEmail, inputPassword);
                     if(!isValid){
-                       Toast.makeText(MainActivity.this, "Incorrect Login Details", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(LoginActivity.this, "Incorrect Login Details", Toast.LENGTH_SHORT).show();
 
                     }else{
 
-                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                         //once login is successful, this intent redirects to the main page activity
 
                         //create intent
-                        startActivity(new Intent(MainActivity.this, MainPageActivity.class));
+                        startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
                         finish();
                     }
 

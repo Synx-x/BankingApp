@@ -8,14 +8,9 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -49,7 +44,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
 
-    public static credentials credentials;
+    public static BankUser credentials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
         rLoginRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
             }
         });
 
@@ -84,7 +79,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //get user input of credentials
+                //get user input of BankUser
                 String regFname = rFname.getText().toString().trim();
                 String regLname = rLname.getText().toString().trim();
                 String regEmail = rEmail.getText().toString().trim();
@@ -100,13 +95,13 @@ public class RegistrationActivity extends AppCompatActivity {
                     sql.addUser(regFname, regLname,  regEmail, regPassword, regMobile, current, savings);
                     sql.close();
 
-                    //loads new credentials into constructor
-                    credentials = new credentials(regEmail, regPassword);
+                    //loads new BankUser into constructor
+                    credentials = new BankUser(regEmail, regPassword);
                     credentials.setDbEmail(sql.getUserName());
                     credentials.setDbPassword(sql.getUserName());
 
-                    //once credentials have been registered, this will redirect the user to the login page
-                    startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                    //once BankUser have been registered, this will redirect the user to the login page
+                    startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                     finish();
                     //message saying registration was successful
                     Toast.makeText(RegistrationActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
@@ -114,7 +109,7 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
     }
-    //validates credentials against the required information in order to register an account
+    //validates BankUser against the required information in order to register an account
     private boolean validate(String name, String lname, String email, String password, String mobile){
         if(name.isEmpty() || lname.isEmpty()){
             Toast.makeText(this, "First Name or Last Name is Empty.", Toast.LENGTH_LONG).show();

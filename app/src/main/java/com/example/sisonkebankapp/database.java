@@ -6,13 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 
@@ -45,7 +38,7 @@ public class database{
     SQLiteDatabase s;
 
     //obj
-    MainActivity main = new MainActivity();
+    LoginActivity main = new LoginActivity();
 
     public database(RegistrationActivity registrationActivity) {
         c = registrationActivity;
@@ -60,7 +53,7 @@ public class database{
 
     }
 
-    public database(MainActivity mainActivity) {
+    public database(LoginActivity mainActivity) {
         c= mainActivity;
     }
 

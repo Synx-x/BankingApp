@@ -1,11 +1,11 @@
 package com.example.sisonkebankapp;
 
-public class credentials {
+public class BankUser {
     //variables used to validate users input
     private String dbEmail;
     private String dbPassword;
 
-    credentials(String email, String password){
+    BankUser(String email, String password){
         this.dbEmail = email;
         this.dbPassword = password;
     }

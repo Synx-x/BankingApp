@@ -2,7 +2,6 @@ package com.example.sisonkebankapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -58,8 +56,6 @@ public class MainPageActivity extends AppCompatActivity {
             while ((text = br.readLine()) != null){
                  sb.append(text);
             }
-
-          //  uiUsername.setText(sb.toString());
             newInt = sb.toString();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -99,7 +95,7 @@ public class MainPageActivity extends AppCompatActivity {
         uiLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainPageActivity.this, MainActivity.class));
+                startActivity(new Intent(MainPageActivity.this, LoginActivity.class));
                 finish();
                 Toast.makeText(MainPageActivity.this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
             }
